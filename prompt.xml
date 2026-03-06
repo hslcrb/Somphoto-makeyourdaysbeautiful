@@ -1,0 +1,62 @@
+<prompt>
+    <role>
+        Act as an expert Android app developer (Kotlin/Jetpack Compose) and an elite UX/UI designer specializing in emotional and sensory design.
+    </role>
+
+    <project_overview>
+        <app_name>Somphoto</app_name>
+        <concept>
+            A daily photo journaling app designed to capture memories with the softness of cotton/cotton candy ("Som"). It encourages users to record their day with a photo and a short text, wrapping their memories in a deeply emotional and calming digital environment.
+        </concept>
+    </project_overview>
+
+    <design_system>
+        <color_palette>
+            <primary_theme>
+                Winter East Sea Magic Hour: A soft, vertical gradient blending pastel sky blue at the top and delicate pastel pink at the bottom.
+            </primary_theme>
+        </color_palette>
+        <ui_styles>
+            <style>Skeuomorphism: Use tactile, realistic textures for primary interactive elements (e.g., a realistic, satisfying camera shutter button).</style>
+            <style>Neumorphism: Use soft, extruded shadows and highlights for background containers and cards to make them feel like they are carved from soft cotton.</style>
+            <style>Glassmorphism: Apply frosted glass blur effects (backdrop filters) on modals, bottom sheets, and navigation bars to let the beautiful magic hour gradient subtly shine through.</style>
+        </ui_styles>
+        <animations>
+            All interactions must feature soft easing, bouncy transitions, and fluid micro-animations to create a gentle, responsive feel.
+        </animations>
+        <assets>
+            The UI must support and gracefully render high-resolution photo assets.
+        </assets>
+    </design_system>
+
+    <core_features>
+        <feature id="1" name="Main UI & Heatmap">
+            A visually stunning home screen featuring a custom aesthetic heatmap (similar to contribution graphs) seamlessly integrated into the design. It tracks daily photo logs, gently nudging and encouraging the user to maintain their daily streak.
+        </feature>
+        <feature id="2" name="Daily Journaling">
+            Allows users to record their day with a high-quality photo and a short text entry.
+        </feature>
+        <feature id="3" name="Dynamic Input Modes">
+            <mode type="Freeform">A clean, blank canvas for open-ended journaling.</mode>
+            <mode type="Guided">
+                A "Select Today's Question" feature. When tapped, a beautifully animated, Glassmorphic input form drops down or expands, providing a thoughtful prompt to inspire the user's daily record.
+            </mode>
+        </feature>
+        <feature id="4" name="Essential Screens">
+            Include a Settings UI, Profile, and Gallery views, all strictly adhering to the established emotional design language.
+        </feature>
+    </core_features>
+
+    <technical_requirements>
+        <platform>Android</platform>
+        <language>Kotlin</language>
+        <ui_framework>Jetpack Compose (Required for optimal implementation of Glassmorphism, Neumorphism, and complex animations)</ui_framework>
+    </technical_requirements>
+
+    <task>
+        1. Define the UX/UI layout architecture for the Main Heatmap Screen and the Journaling Screen.
+        2. Provide the Kotlin/Jetpack Compose code to generate the "Winter East Sea Magic Hour" gradient background.
+        3. Write the Jetpack Compose code for the main UI, including the Neumorphic cards, the Glassmorphic input form for "Today's Question", and the custom Heatmap UI.
+        4. Implement the smooth animation logic for switching between "Freeform" and "Guided" input modes.
+    </task>
+</prompt>
