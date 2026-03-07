@@ -24,39 +24,46 @@ import com.somphoto.ui.components.GlassmorphicContainer
 import com.somphoto.ui.components.WinterEastSeaMagicHourBackground
 import com.somphoto.ui.theme.DelicatePastelPink
 
-enum class InputMode { Freeform, Guided }
+enum class InputMode {
+    Freeform,
+    Guided
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun JournalingScreen(onClose: () -> Unit) {
+fun JournalingScreen(onClose: () -> Unit, onSave: (String, String?, String?) -> Unit) {
     var currentMode by remember { mutableStateOf(InputMode.Freeform) }
     var textEntry by remember { mutableStateOf("") }
     var showQuestions by remember { mutableStateOf(false) }
     var selectedQuestion by remember { mutableStateOf("What made you smile today?") }
 
     WinterEastSeaMagicHourBackground {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(24.dp)
-                .systemBarsPadding() 
-        ) {
+        Column(modifier = Modifier.fillMaxSize().padding(24.dp).systemBarsPadding()) {
             // Top Bar
             Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Cancel", 
-                    color = Color.White, 
-                    fontWeight = FontWeight.Medium,
-                    modifier = Modifier.clickable { onClose() }
+                        text = "Cancel",
+                        color = Color.White,
+                        fontWeight = FontWeight.Medium,
+                        modifier = Modifier.clickable { onClose() }
                 )
                 Text(
-                    text = "Save", 
-                    color = Color.White, 
-                    fontWeight = FontWeight.Bold
+                        text = "Save",
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold,
+                        modifier =
+                                Modifier.clickable {
+                                    onSave(
+                                            textEntry,
+                                            null,
+                                            if (currentMode == InputMode.Guided) selectedQuestion
+                                            else null
+                                    )
+                                }
                 )
             }
 
@@ -64,36 +71,37 @@ fun JournalingScreen(onClose: () -> Unit) {
 
             // Photo Area Placeholder overlaying gradient
             Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f)
-                    .clip(RoundedCornerShape(32.dp))
-                    .background(Color.White.copy(alpha = 0.2f)),
-                contentAlignment = Alignment.Center
-            ) {
-                Text("Tap to add a soft memory", color = Color.White)
-            }
+                    modifier =
+                            Modifier.fillMaxWidth()
+                                    .weight(1f)
+                                    .clip(RoundedCornerShape(32.dp))
+                                    .background(Color.White.copy(alpha = 0.2f)),
+                    contentAlignment = Alignment.Center
+            ) { Text("Tap to add a soft memory", color = Color.White) }
 
             Spacer(modifier = Modifier.height(24.dp))
 
             // Dynamic Input Mode Switcher
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(50))
-                    .background(Color.White.copy(alpha = 0.3f))
-                    .padding(4.dp),
-                horizontalArrangement = Arrangement.SpaceEvenly
+                    modifier =
+                            Modifier.fillMaxWidth()
+                                    .clip(RoundedCornerShape(50))
+                                    .background(Color.White.copy(alpha = 0.3f))
+                                    .padding(4.dp),
+                    horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 ModeToggleButton(
-                    title = "Freeform",
-                    isSelected = currentMode == InputMode.Freeform,
-                    onClick = { currentMode = InputMode.Freeform; showQuestions = false }
+                        title = "Freeform",
+                        isSelected = currentMode == InputMode.Freeform,
+                        onClick = {
+                            currentMode = InputMode.Freeform
+                            showQuestions = false
+                        }
                 )
                 ModeToggleButton(
-                    title = "Guided",
-                    isSelected = currentMode == InputMode.Guided,
-                    onClick = { currentMode = InputMode.Guided }
+                        title = "Guided",
+                        isSelected = currentMode == InputMode.Guided,
+                        onClick = { currentMode = InputMode.Guided }
                 )
             }
 
@@ -101,55 +109,71 @@ fun JournalingScreen(onClose: () -> Unit) {
 
             // Smooth Animated Input Area
             Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .animateContentSize(
-                        animationSpec = spring(
-                            dampingRatio = Spring.DampingRatioMediumBouncy,
-                            stiffness = Spring.StiffnessLow
-                        )
-                    )
+                    modifier =
+                            Modifier.fillMaxWidth()
+                                    .animateContentSize(
+                                            animationSpec =
+                                                    spring(
+                                                            dampingRatio =
+                                                                    Spring.DampingRatioMediumBouncy,
+                                                            stiffness = Spring.StiffnessLow
+                                                    )
+                                    )
             ) {
                 if (currentMode == InputMode.Guided) {
                     GlassmorphicContainer(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable { showQuestions = !showQuestions }
+                            modifier =
+                                    Modifier.fillMaxWidth().clickable {
+                                        showQuestions = !showQuestions
+                                    }
                     ) {
                         Text(
-                            text = if (showQuestions) "Select Today's Question" else selectedQuestion,
-                            color = Color.White,
-                            modifier = Modifier.padding(16.dp)
+                                text =
+                                        if (showQuestions) "Select Today's Question"
+                                        else selectedQuestion,
+                                color = Color.White,
+                                modifier = Modifier.padding(16.dp)
                         )
                     }
-                    
+
                     AnimatedVisibility(visible = showQuestions) {
                         Column(modifier = Modifier.padding(top = 8.dp)) {
-                            QuestionItem("What made you smile today?") { selectedQuestion = it; showQuestions = false }
-                            QuestionItem("Who did you think of the most?") { selectedQuestion = it; showQuestions = false }
-                            QuestionItem("What felt like \"Som\" (cotton) today?") { selectedQuestion = it; showQuestions = false }
+                            QuestionItem("What made you smile today?") {
+                                selectedQuestion = it
+                                showQuestions = false
+                            }
+                            QuestionItem("Who did you think of the most?") {
+                                selectedQuestion = it
+                                showQuestions = false
+                            }
+                            QuestionItem("What felt like \"Som\" (cotton) today?") {
+                                selectedQuestion = it
+                                showQuestions = false
+                            }
                         }
                     }
                     Spacer(modifier = Modifier.height(12.dp))
                 }
 
                 TextField(
-                    value = textEntry,
-                    onValueChange = { textEntry = it },
-                    placeholder = { 
-                        Text("Let your thoughts flow delicately...", color = Color.White.copy(alpha = 0.6f)) 
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .heightIn(min = 120.dp),
-                    colors = TextFieldDefaults.textFieldColors(
-                        containerColor = Color.Transparent,
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        cursorColor = Color.White,
-                        focusedTextColor = Color.White,
-                        unfocusedTextColor = Color.White
-                    )
+                        value = textEntry,
+                        onValueChange = { textEntry = it },
+                        placeholder = {
+                            Text(
+                                    "Let your thoughts flow delicately...",
+                                    color = Color.White.copy(alpha = 0.6f)
+                            )
+                        },
+                        modifier = Modifier.fillMaxWidth().heightIn(min = 120.dp),
+                        colors =
+                                TextFieldDefaults.textFieldColors(
+                                        containerColor = Color.Transparent,
+                                        focusedIndicatorColor = Color.Transparent,
+                                        unfocusedIndicatorColor = Color.Transparent,
+                                        cursorColor = Color.White,
+                                        focusedTextColor = Color.White,
+                                        unfocusedTextColor = Color.White
+                                )
                 )
             }
         }
@@ -159,17 +183,17 @@ fun JournalingScreen(onClose: () -> Unit) {
 @Composable
 fun ModeToggleButton(title: String, isSelected: Boolean, onClick: () -> Unit) {
     Box(
-        modifier = Modifier
-            .clip(RoundedCornerShape(50))
-            .background(if (isSelected) Color.White else Color.Transparent)
-            .clickable { onClick() }
-            .padding(horizontal = 24.dp, vertical = 8.dp)
+            modifier =
+                    Modifier.clip(RoundedCornerShape(50))
+                            .background(if (isSelected) Color.White else Color.Transparent)
+                            .clickable { onClick() }
+                            .padding(horizontal = 24.dp, vertical = 8.dp)
     ) {
         Text(
-            text = title,
-            color = if (isSelected) DelicatePastelPink else Color.White,
-            fontWeight = FontWeight.Bold,
-            fontSize = 14.sp
+                text = title,
+                color = if (isSelected) DelicatePastelPink else Color.White,
+                fontWeight = FontWeight.Bold,
+                fontSize = 14.sp
         )
     }
 }
@@ -177,11 +201,11 @@ fun ModeToggleButton(title: String, isSelected: Boolean, onClick: () -> Unit) {
 @Composable
 fun QuestionItem(question: String, onClick: (String) -> Unit) {
     Text(
-        text = question,
-        color = Color.White.copy(alpha = 0.9f),
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable { onClick(question) }
-            .padding(vertical = 8.dp, horizontal = 16.dp)
+            text = question,
+            color = Color.White.copy(alpha = 0.9f),
+            modifier =
+                    Modifier.fillMaxWidth()
+                            .clickable { onClick(question) }
+                            .padding(vertical = 8.dp, horizontal = 16.dp)
     )
 }
