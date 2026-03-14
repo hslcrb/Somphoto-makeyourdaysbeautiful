@@ -39,4 +39,5 @@
     <string name="theme_options">Theme Options</string>
     <string name="theme_desc">Adjust the magic hour colors.</string>
     <string name="version">Somphoto v1.0</string>
+    <string name="remember_me">Remember Me</string>
 </resources>

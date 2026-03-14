@@ -18,7 +18,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -29,6 +28,11 @@ import com.somphoto.R
 import com.somphoto.ui.components.SomBackground
 import com.somphoto.ui.components.SomCard
 import com.somphoto.ui.theme.*
+
+enum class InputMode {
+    Freeform,
+    Guided
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -61,13 +65,13 @@ fun JournalingScreen(onClose: () -> Unit, onSave: (String, String?, String?) -> 
                 Text(
                         text = stringResource(id = R.string.cancel),
                         color = PastelBlueMain,
-                        fontWeight = FontWeight.Medium,
+                        fontWeight = FontWeight.ExtraBold,
                         modifier = Modifier.clickable { onClose() }
                 )
                 Text(
                         text = stringResource(id = R.string.save),
                         color = PastelBlueMain,
-                        fontWeight = FontWeight.Bold,
+                        fontWeight = FontWeight.ExtraBold,
                         modifier =
                                 Modifier.clickable {
                                     onSave(
@@ -101,14 +105,15 @@ fun JournalingScreen(onClose: () -> Unit, onSave: (String, String?, String?) -> 
                         Icon(
                             painter = painterResource(id = R.drawable.ic_camera),
                             contentDescription = null,
-                            tint = PastelBlueMain.copy(alpha = 0.5f),
-                            modifier = Modifier.size(48.dp)
+                            tint = PastelPinkMain,
+                            modifier = Modifier.size(56.dp)
                         )
-                        Spacer(modifier = Modifier.height(8.dp))
+                        Spacer(modifier = Modifier.height(12.dp))
                         Text(
                             text = stringResource(id = R.string.tap_to_add_memory),
-                            color = PastelBlueMain.copy(alpha = 0.7f),
-                            fontWeight = FontWeight.Medium
+                            color = PastelPinkDark,
+                            fontWeight = FontWeight.ExtraBold,
+                            fontSize = 16.sp
                         )
                     }
                 }
@@ -121,7 +126,7 @@ fun JournalingScreen(onClose: () -> Unit, onSave: (String, String?, String?) -> 
                     modifier =
                             Modifier.fillMaxWidth()
                                     .clip(RoundedCornerShape(50))
-                                    .background(Color.White.copy(alpha = 0.5f))
+                                    .background(Color.White.copy(alpha = 0.6f))
                                     .padding(4.dp),
                     horizontalArrangement = Arrangement.SpaceEvenly
             ) {
@@ -167,7 +172,7 @@ fun JournalingScreen(onClose: () -> Unit, onSave: (String, String?, String?) -> 
                                         else selectedQuestion,
                                 color = PastelPinkDark,
                                 modifier = Modifier.padding(16.dp),
-                                fontWeight = FontWeight.Bold
+                                fontWeight = FontWeight.ExtraBold
                         )
                     }
 
@@ -196,14 +201,15 @@ fun JournalingScreen(onClose: () -> Unit, onSave: (String, String?, String?) -> 
                         placeholder = {
                             Text(
                                     stringResource(id = R.string.placeholder_thoughts),
-                                    color = PastelBlueMain.copy(alpha = 0.6f)
+                                    color = PastelBlueMain.copy(alpha = 0.7f),
+                                    fontWeight = FontWeight.Bold
                             )
                         },
-                        modifier = Modifier.fillMaxWidth().heightIn(min = 120.dp),
+                        modifier = Modifier.fillMaxWidth().heightIn(min = 140.dp),
                         colors =
                                 TextFieldDefaults.colors(
-                                        focusedContainerColor = Color.White.copy(alpha = 0.4f),
-                                        unfocusedContainerColor = Color.White.copy(alpha = 0.2f),
+                                        focusedContainerColor = Color.White.copy(alpha = 0.5f),
+                                        unfocusedContainerColor = Color.White.copy(alpha = 0.3f),
                                         focusedIndicatorColor = Color.Transparent,
                                         unfocusedIndicatorColor = Color.Transparent,
                                         cursorColor = PastelPinkMain,
@@ -215,4 +221,35 @@ fun JournalingScreen(onClose: () -> Unit, onSave: (String, String?, String?) -> 
             }
         }
     }
+}
+
+@Composable
+fun ModeToggleButton(title: String, isSelected: Boolean, onClick: () -> Unit) {
+    Box(
+            modifier =
+                    Modifier.clip(RoundedCornerShape(50))
+                            .background(if (isSelected) Color.White else Color.Transparent)
+                            .clickable { onClick() }
+                            .padding(horizontal = 24.dp, vertical = 8.dp)
+    ) {
+        Text(
+                text = title,
+                color = if (isSelected) PastelPinkMain else PastelBlueMain,
+                fontWeight = FontWeight.ExtraBold,
+                fontSize = 15.sp
+        )
+    }
+}
+
+@Composable
+fun QuestionItem(question: String, onClick: (String) -> Unit) {
+    Text(
+            text = question,
+            color = PastelBlueMain,
+            fontWeight = FontWeight.ExtraBold,
+            modifier =
+                    Modifier.fillMaxWidth()
+                            .clickable { onClick(question) }
+                            .padding(vertical = 12.dp, horizontal = 16.dp)
+    )
 }
