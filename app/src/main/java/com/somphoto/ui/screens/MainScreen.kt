@@ -3,7 +3,7 @@ package com.somphoto.ui.screens
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -73,62 +73,74 @@ fun MainScreen(
                     .padding(horizontal = 24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Spacer(modifier = Modifier.height(20.dp))
-                
+                // 1. Welcome Msg at the Top
+                Spacer(modifier = Modifier.height(16.dp))
                 Text(
                     text = stringResource(id = R.string.welcome_msg),
                     color = PastelBlueMain,
-                    fontSize = 22.sp,
-                    fontWeight = FontWeight.Bold,
-                    lineHeight = 28.sp
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.ExtraBold,
+                    lineHeight = 24.sp
                 )
 
-                Spacer(modifier = Modifier.weight(1f))
+                // 2. Heatmap positioned at "Upper-Middle"
+                Spacer(modifier = Modifier.height(56.dp))
+                
+                HeatmapGraph(
+                    entries = entries, 
+                    modifier = Modifier.fillMaxWidth()
+                )
 
-                // New Sensorial Central Button: "Remember Me"
+                // 3. Small Pill-shaped button "Right Below" the Heatmap
+                Spacer(modifier = Modifier.height(12.dp))
+                
                 Box(
                     modifier = Modifier
                         .jellyClick(onClick = onNavigateToJournaling)
-                        .size(200.dp)
-                        .clip(CircleShape)
+                        .height(48.dp)
+                        .fillMaxWidth(0.55f) // Smaller pill shape
+                        .clip(RoundedCornerShape(24.dp)) // Semi-circular ends
                         .background(
-                            brush = Brush.radialGradient(
-                                colors = listOf(PastelPinkLight, PastelPinkMain, PastelPinkDark)
+                            brush = Brush.horizontalGradient(
+                                colors = listOf(PastelPinkMain, PastelPinkDark)
                             )
                         )
-                        .border(4.dp, Color.White.copy(alpha = 0.6f), CircleShape)
-                        .padding(8.dp),
+                        .border(
+                            width = 2.dp, 
+                            color = Color.White.copy(alpha = 0.8f), 
+                            shape = RoundedCornerShape(24.dp)
+                        ),
                     contentAlignment = Alignment.Center
                 ) {
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center,
+                        modifier = Modifier.padding(horizontal = 16.dp)
                     ) {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_camera),
                             contentDescription = null,
                             tint = Color.White,
-                            modifier = Modifier.size(48.dp)
+                            modifier = Modifier.size(20.dp)
                         )
-                        Spacer(modifier = Modifier.height(12.dp))
+                        Spacer(modifier = Modifier.width(8.dp))
                         Text(
                             text = stringResource(id = R.string.remember_me),
                             color = Color.White,
-                            fontSize = 20.sp,
+                            fontSize = 14.sp,
                             fontWeight = FontWeight.ExtraBold
                         )
                     }
                     
-                    // Glossy Overlay for Frutiger Aero feel
+                    // Frutiger Aero Glossy Glass Highlight
                     Box(
                         modifier = Modifier
-                            .matchParentSize()
-                            .clip(CircleShape)
+                            .fillMaxSize()
+                            .clip(RoundedCornerShape(24.dp))
                             .background(
                                 brush = Brush.verticalGradient(
                                     colors = listOf(
                                         Color.White.copy(alpha = 0.4f),
-                                        Color.Transparent,
                                         Color.Transparent,
                                         Color.White.copy(alpha = 0.1f)
                                     )
@@ -137,11 +149,8 @@ fun MainScreen(
                     )
                 }
 
+                // 4. Push the rest to balance the "Upper-Middle" focus
                 Spacer(modifier = Modifier.weight(1f))
-                
-                HeatmapGraph(entries = entries, modifier = Modifier.fillMaxWidth())
-                
-                Spacer(modifier = Modifier.height(24.dp))
             }
         }
     }
