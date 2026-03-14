@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Somphoto</string>
+    <string name="welcome_msg">A soft touch to your day.</string>
+    <string name="home">Home</string>
+    <string name="gallery">Gallery</string>
+    <string name="profile">Profile</string>
+    <string name="settings">Settings</string>
+    <string name="memories_log">Your Memories Log</string>
+    <string name="save">Save</string>
+    <string name="close">Close</string>
+    <string name="cancel">Cancel</string>
+    <string name="tap_to_add_memory">Tap to add a soft memory</string>
+    <string name="freeform">Freeform</string>
+    <string name="guided">Guided</string>
+    <string name="placeholder_thoughts">Let your thoughts flow delicately…</string>
+    <string name="select_question">Select Today\'s Question</string>
+    <string name="q1">What made you smile today?</string>
+    <string name="q2">Who did you think of the most?</string>
+    <string name="q3">What felt like "Som" (cotton) today?</string>
+    <string name="your_gallery">Your Gallery</string>
+    <string name="no_memories">No soft memories yet.</string>
+    <string name="back">Back</string>
+    <string name="your_profile">Your Profile</string>
+    <string name="dreamer_name">A Gentle Dreamer</string>
+    <string name="memories_stat">Memories</string>
+    <string name="last_visit">Last Visit</string>
+    <string name="current_streak">Current Streak</string>
+    <string name="days_count">%1$d Days</string>
+    <string name="today">Today</string>
+    <string name="na">N/A</string>
+    <string name="weekly">Weekly</string>
+    <string name="monthly">Monthly</string>
+    <string name="yearly">Yearly</string>
+    <string name="daily_nudge">Daily Nudge</string>
+    <string name="nudge_desc">Get a soft reminder to record your day.</string>
+    <string name="cloud_sync">Cloud Sync</string>
+    <string name="cloud_desc">Back up your memories to the soft cloud.</string>
+    <string name="theme_options">Theme Options</string>
+    <string name="theme_desc">Adjust the magic hour colors.</string>
+    <string name="version">Somphoto v1.0</string>
+</resources>

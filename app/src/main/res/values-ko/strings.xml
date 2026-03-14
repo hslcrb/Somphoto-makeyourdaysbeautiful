@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">솜포토 (Somphoto)</string>
+    <string name="welcome_msg">당신의 하루에 부드러운 손길을.</string>
+    <string name="home">홈</string>
+    <string name="gallery">갤러리</string>
+    <string name="profile">프로필</string>
+    <string name="settings">설정</string>
+    <string name="memories_log">나의 추억 기록</string>
+    <string name="save">저장</string>
+    <string name="close">닫기</string>
+    <string name="cancel">취소</string>
+    <string name="tap_to_add_memory">부드러운 추억을 추가하려면 탭하세요</string>
+    <string name="freeform">자유 기록</string>
+    <string name="guided">질문 기록</string>
+    <string name="placeholder_thoughts">당신의 생각을 부드럽게 흘려보내세요…</string>
+    <string name="select_question">오늘의 질문 선택하기</string>
+    <string name="q1">오늘 당신을 웃게 만든 것은 무엇인가요?</string>
+    <string name="q2">오늘 누구를 가장 많이 생각했나요?</string>
+    <string name="q3">오늘의 "솜" 같았던 순간은 언제였나요?</string>
+    <string name="your_gallery">나의 갤러리</string>
+    <string name="no_memories">아직 기록된 추억이 없어요.</string>
+    <string name="back">뒤로</string>
+    <string name="your_profile">나의 프로필</string>
+    <string name="dreamer_name">부드러운 몽상가</string>
+    <string name="memories_stat">추억들</string>
+    <string name="last_visit">마지막 방문</string>
+    <string name="current_streak">현재 스트릭</string>
+    <string name="days_count">%1$d일</string>
+    <string name="today">오늘</string>
+    <string name="na">없음</string>
+    <string name="weekly">주간</string>
+    <string name="monthly">월간</string>
+    <string name="yearly">연간</string>
+    <string name="daily_nudge">데일리 알림</string>
+    <string name="nudge_desc">하루를 기록할 수 있도록 부드러운 알림을 보냅니다.</string>
+    <string name="cloud_sync">클라우드 동기화</string>
+    <string name="cloud_desc">당신의 추억을 안전한 클라우드에 백업합니다.</string>
+    <string name="theme_options">테마 설정</string>
+    <string name="theme_desc">매직 아워의 색상을 조절합니다.</string>
+    <string name="version">솜포토 v1.0</string>
+</resources>

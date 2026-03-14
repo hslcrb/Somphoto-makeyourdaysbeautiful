@@ -5,15 +5,19 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
 import com.somphoto.data.JournalEntry
 import com.somphoto.data.SomDatabase
 import com.somphoto.ui.screens.*
+import com.somphoto.ui.theme.PastelBlueMain
 import kotlinx.coroutines.launch
 
 enum class Screen {
@@ -47,15 +51,17 @@ class MainActivity : ComponentActivity() {
                                                         Color.White.copy(alpha = 0.95f)
                                         ) {
                                                 Text(
-                                                        "Somphoto",
+                                                        stringResource(id = R.string.app_name),
                                                         modifier = Modifier.padding(16.dp),
                                                         style =
                                                                 MaterialTheme.typography
-                                                                        .headlineMedium
+                                                                        .headlineMedium,
+                                                        color = PastelBlueMain
                                                 )
                                                 Divider()
                                                 NavigationDrawerItem(
-                                                        label = { Text("Home") },
+                                                        icon = { Icon(painter = painterResource(id = R.drawable.ic_home), contentDescription = null, modifier = Modifier.size(24.dp)) },
+                                                        label = { Text(stringResource(id = R.string.home)) },
                                                         selected = currentScreen == Screen.Main,
                                                         onClick = {
                                                                 currentScreen = Screen.Main
@@ -63,7 +69,8 @@ class MainActivity : ComponentActivity() {
                                                         }
                                                 )
                                                 NavigationDrawerItem(
-                                                        label = { Text("Gallery") },
+                                                        icon = { Icon(painter = painterResource(id = R.drawable.ic_gallery), contentDescription = null, modifier = Modifier.size(24.dp)) },
+                                                        label = { Text(stringResource(id = R.string.gallery)) },
                                                         selected = currentScreen == Screen.Gallery,
                                                         onClick = {
                                                                 currentScreen = Screen.Gallery
@@ -71,7 +78,8 @@ class MainActivity : ComponentActivity() {
                                                         }
                                                 )
                                                 NavigationDrawerItem(
-                                                        label = { Text("Profile") },
+                                                        icon = { Icon(painter = painterResource(id = R.drawable.ic_profile), contentDescription = null, modifier = Modifier.size(24.dp)) },
+                                                        label = { Text(stringResource(id = R.string.profile)) },
                                                         selected = currentScreen == Screen.Profile,
                                                         onClick = {
                                                                 currentScreen = Screen.Profile
@@ -79,7 +87,8 @@ class MainActivity : ComponentActivity() {
                                                         }
                                                 )
                                                 NavigationDrawerItem(
-                                                        label = { Text("Settings") },
+                                                        icon = { Icon(painter = painterResource(id = R.drawable.ic_settings), contentDescription = null, modifier = Modifier.size(24.dp)) },
+                                                        label = { Text(stringResource(id = R.string.settings)) },
                                                         selected = currentScreen == Screen.Settings,
                                                         onClick = {
                                                                 currentScreen = Screen.Settings

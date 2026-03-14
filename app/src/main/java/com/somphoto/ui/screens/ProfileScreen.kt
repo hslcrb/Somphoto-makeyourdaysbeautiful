@@ -6,13 +6,17 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.somphoto.R
 import com.somphoto.data.JournalEntry
-import com.somphoto.ui.components.NeumorphicCard
-import com.somphoto.ui.components.WinterEastSeaMagicHourBackground
-import com.somphoto.ui.theme.SoftCottonWhite
+import com.somphoto.ui.components.SomBackground
+import com.somphoto.ui.components.SomCard
+import com.somphoto.ui.theme.PastelBlueMain
+import com.somphoto.ui.theme.PastelPinkDark
 import kotlinx.coroutines.flow.Flow
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -20,23 +24,28 @@ import kotlinx.coroutines.flow.Flow
 fun ProfileScreen(entriesFlow: Flow<List<JournalEntry>>, onBack: () -> Unit) {
     val entries by entriesFlow.collectAsState(initial = emptyList())
     val totalEntries = entries.size
-    val lastEntryDate = if (entries.isNotEmpty()) "Today" else "N/A"
+    val lastEntryDate = if (entries.isNotEmpty()) stringResource(id = R.string.today) else stringResource(id = R.string.na)
 
-    WinterEastSeaMagicHourBackground {
+    SomBackground {
         Scaffold(
                 containerColor = Color.Transparent,
                 topBar = {
                     TopAppBar(
                             title = {
                                 Text(
-                                        "Your Profile",
-                                        color = SoftCottonWhite,
-                                        fontWeight = FontWeight.Medium
+                                        stringResource(id = R.string.your_profile),
+                                        color = PastelBlueMain,
+                                        fontWeight = FontWeight.ExtraBold
                                 )
                             },
                             navigationIcon = {
                                 IconButton(onClick = onBack) {
-                                    Text("←", color = SoftCottonWhite, fontSize = 24.sp)
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.ic_back),
+                                        contentDescription = "Back",
+                                        tint = PastelBlueMain,
+                                        modifier = Modifier.size(28.dp)
+                                    )
                                 }
                             },
                             colors =
@@ -51,17 +60,22 @@ fun ProfileScreen(entriesFlow: Flow<List<JournalEntry>>, onBack: () -> Unit) {
                     horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 // Profile Avatar Placeholder
-                NeumorphicCard(modifier = Modifier.size(120.dp), cornerRadius = 60.dp) {
-                    Text("📷", fontSize = 48.sp)
+                SomCard(modifier = Modifier.size(120.dp)) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_flower),
+                        contentDescription = null,
+                        tint = Color.Unspecified, // Keep SVG colors if any, or use tint
+                        modifier = Modifier.size(80.dp)
+                    )
                 }
 
                 Spacer(modifier = Modifier.height(24.dp))
 
                 Text(
-                        text = "A Gentle Dreamer",
-                        color = SoftCottonWhite,
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.Bold
+                        text = stringResource(id = R.string.dreamer_name),
+                        color = PastelBlueMain,
+                        fontSize = 26.sp,
+                        fontWeight = FontWeight.ExtraBold
                 )
 
                 Spacer(modifier = Modifier.height(40.dp))
@@ -72,12 +86,12 @@ fun ProfileScreen(entriesFlow: Flow<List<JournalEntry>>, onBack: () -> Unit) {
                         horizontalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     StatCard(
-                            label = "Memories",
+                            label = stringResource(id = R.string.memories_stat),
                             value = totalEntries.toString(),
                             modifier = Modifier.weight(1f)
                     )
                     StatCard(
-                            label = "Last Visit",
+                            label = stringResource(id = R.string.last_visit),
                             value = lastEntryDate,
                             modifier = Modifier.weight(1f)
                     )
@@ -85,17 +99,21 @@ fun ProfileScreen(entriesFlow: Flow<List<JournalEntry>>, onBack: () -> Unit) {
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                NeumorphicCard(
-                        modifier = Modifier.fillMaxWidth().height(100.dp),
-                        cornerRadius = 24.dp
+                SomCard(
+                        modifier = Modifier.fillMaxWidth().height(120.dp)
                 ) {
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text("Current Streak", color = Color.Gray, fontSize = 14.sp)
                         Text(
-                                "3 Days",
-                                color = Color(0xFFF68084),
-                                fontSize = 28.sp,
-                                fontWeight = FontWeight.Bold
+                            stringResource(id = R.string.current_streak),
+                            color = PastelBlueMain,
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Text(
+                                stringResource(id = R.string.days_count, 3),
+                                color = PastelPinkDark,
+                                fontSize = 32.sp,
+                                fontWeight = FontWeight.ExtraBold
                         )
                     }
                 }
@@ -106,10 +124,10 @@ fun ProfileScreen(entriesFlow: Flow<List<JournalEntry>>, onBack: () -> Unit) {
 
 @Composable
 fun StatCard(label: String, value: String, modifier: Modifier = Modifier) {
-    NeumorphicCard(modifier = modifier.height(100.dp), cornerRadius = 24.dp) {
+    SomCard(modifier = modifier.height(110.dp)) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(label, color = Color.Gray, fontSize = 14.sp)
-            Text(value, color = Color.DarkGray, fontSize = 20.sp, fontWeight = FontWeight.Bold)
+            Text(label, color = PastelBlueMain, fontSize = 14.sp, fontWeight = FontWeight.Medium)
+            Text(value, color = PastelPinkDark, fontSize = 22.sp, fontWeight = FontWeight.ExtraBold)
         }
     }
 }

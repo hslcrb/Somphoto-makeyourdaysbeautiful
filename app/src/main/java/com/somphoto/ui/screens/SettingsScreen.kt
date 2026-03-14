@@ -6,31 +6,40 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.somphoto.ui.components.GlassmorphicContainer
-import com.somphoto.ui.components.WinterEastSeaMagicHourBackground
-import com.somphoto.ui.theme.SoftCottonWhite
+import com.somphoto.R
+import com.somphoto.ui.components.SomBackground
+import com.somphoto.ui.components.SomCard
+import com.somphoto.ui.theme.PastelBlueMain
+import com.somphoto.ui.theme.PastelPinkMain
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(onBack: () -> Unit) {
-    WinterEastSeaMagicHourBackground {
+    SomBackground {
         Scaffold(
                 containerColor = Color.Transparent,
                 topBar = {
                     TopAppBar(
                             title = {
                                 Text(
-                                        "Settings",
-                                        color = SoftCottonWhite,
-                                        fontWeight = FontWeight.Medium
+                                        stringResource(id = R.string.settings),
+                                        color = PastelBlueMain,
+                                        fontWeight = FontWeight.ExtraBold
                                 )
                             },
                             navigationIcon = {
                                 IconButton(onClick = onBack) {
-                                    Text("←", color = SoftCottonWhite, fontSize = 24.sp)
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.ic_back),
+                                        contentDescription = "Back",
+                                        tint = PastelBlueMain,
+                                        modifier = Modifier.size(28.dp)
+                                    )
                                 }
                             },
                             colors =
@@ -45,22 +54,26 @@ fun SettingsScreen(onBack: () -> Unit) {
                     verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 SettingsItem(
-                        title = "Daily Nudge",
-                        description = "Get a soft reminder to record your day."
+                        title = stringResource(id = R.string.daily_nudge),
+                        description = stringResource(id = R.string.nudge_desc)
                 )
                 SettingsItem(
-                        title = "Cloud Sync",
-                        description = "Back up your memories to the soft cloud."
+                        title = stringResource(id = R.string.cloud_sync),
+                        description = stringResource(id = R.string.cloud_desc)
                 )
-                SettingsItem(title = "Theme Options", description = "Adjust the magic hour colors.")
+                SettingsItem(
+                    title = stringResource(id = R.string.theme_options), 
+                    description = stringResource(id = R.string.theme_desc)
+                )
 
                 Spacer(modifier = Modifier.weight(1f))
 
                 Text(
-                        text = "Somphoto v1.0",
+                        text = stringResource(id = R.string.version),
                         modifier = Modifier.align(Alignment.CenterHorizontally),
-                        color = SoftCottonWhite.copy(alpha = 0.5f),
-                        fontSize = 12.sp
+                        color = PastelBlueMain.copy(alpha = 0.5f),
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Medium
                 )
             }
         }
@@ -70,15 +83,15 @@ fun SettingsScreen(onBack: () -> Unit) {
 @Composable
 fun SettingsItem(title: String, description: String) {
     var checked by remember { mutableStateOf(true) }
-    GlassmorphicContainer(modifier = Modifier.fillMaxWidth()) {
+    SomCard(modifier = Modifier.fillMaxWidth()) {
         Row(
                 modifier = Modifier.fillMaxWidth().padding(16.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Column(modifier = Modifier.weight(1f)) {
-                Text(title, color = Color.White, fontWeight = FontWeight.Bold, fontSize = 16.sp)
-                Text(description, color = Color.White.copy(alpha = 0.8f), fontSize = 12.sp)
+                Text(title, color = PastelBlueMain, fontWeight = FontWeight.Bold, fontSize = 16.sp)
+                Text(description, color = PastelBlueMain.copy(alpha = 0.7f), fontSize = 12.sp)
             }
             Switch(
                     checked = checked,
@@ -86,7 +99,9 @@ fun SettingsItem(title: String, description: String) {
                     colors =
                             SwitchDefaults.colors(
                                     checkedThumbColor = Color.White,
-                                    checkedTrackColor = Color.White.copy(alpha = 0.5f)
+                                    checkedTrackColor = PastelPinkMain,
+                                    uncheckedThumbColor = Color.White,
+                                    uncheckedTrackColor = PastelBlueMain.copy(alpha = 0.3f)
                             )
             )
         }

@@ -6,19 +6,21 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
-import com.somphoto.ui.theme.DelicatePastelPink
-import com.somphoto.ui.theme.MagicSkyBlue
+import com.somphoto.ui.theme.PastelPinkLight
+import com.somphoto.ui.theme.PastelPinkMain
+import com.somphoto.ui.theme.SoftWhite
 
 @Composable
-fun WinterEastSeaMagicHourBackground(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
+fun SomBackground(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
     Box(
         modifier = modifier
             .fillMaxSize()
             .background(
                 brush = Brush.verticalGradient(
                     colors = listOf(
-                        MagicSkyBlue,
-                        DelicatePastelPink
+                        SoftWhite,
+                        PastelPinkLight,
+                        PastelPinkMain
                     )
                 )
             )

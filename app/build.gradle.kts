@@ -57,6 +57,9 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
     
+    // Coil for image loading
+    implementation("io.coil-kt:coil-compose:2.5.0")
+    
     // Room
     val room_version = "2.6.1"
     implementation("androidx.room:room-runtime:$room_version")
