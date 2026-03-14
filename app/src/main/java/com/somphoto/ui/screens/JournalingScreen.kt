@@ -1,8 +1,10 @@
 package com.somphoto.ui.screens
 
+import android.graphics.Bitmap
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.launch
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
@@ -41,11 +43,20 @@ fun JournalingScreen(onClose: () -> Unit, onSave: (String, String?, String?) -> 
     var textEntry by remember { mutableStateOf("") }
     var showQuestions by remember { mutableStateOf(false) }
     var selectedPhotoUri by remember { mutableStateOf<Uri?>(null) }
+    var capturedBitmap by remember { mutableStateOf<Bitmap?>(null) }
     
-    val launcher = rememberLauncherForActivityResult(
+    val galleryLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
         selectedPhotoUri = uri
+        capturedBitmap = null
+    }
+
+    val cameraLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.TakePicturePreview()
+    ) { bitmap: Bitmap? ->
+        capturedBitmap = bitmap
+        selectedPhotoUri = null
     }
     
     val q1 = stringResource(id = R.string.q1)
@@ -76,7 +87,7 @@ fun JournalingScreen(onClose: () -> Unit, onSave: (String, String?, String?) -> 
                                 Modifier.clickable {
                                     onSave(
                                             textEntry,
-                                            selectedPhotoUri?.toString(),
+                                            selectedPhotoUri?.toString() ?: capturedBitmap?.toString(),
                                             if (currentMode == InputMode.Guided) selectedQuestion
                                             else null
                                     )
@@ -86,35 +97,55 @@ fun JournalingScreen(onClose: () -> Unit, onSave: (String, String?, String?) -> 
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // Photo Area
+            // Photo Area with Dual Options
             SomCard(
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(1f)
-                        .clickable { launcher.launch("image/*") }
             ) {
-                if (selectedPhotoUri != null) {
+                if (selectedPhotoUri != null || capturedBitmap != null) {
                     AsyncImage(
-                        model = selectedPhotoUri,
+                        model = selectedPhotoUri ?: capturedBitmap,
                         contentDescription = "Selected Photo",
-                        modifier = Modifier.fillMaxSize().clip(RoundedCornerShape(24.dp)),
+                        modifier = Modifier.fillMaxSize().clip(RoundedCornerShape(24.dp)).clickable { 
+                            selectedPhotoUri = null
+                            capturedBitmap = null
+                        },
                         contentScale = ContentScale.Crop
                     )
                 } else {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_camera),
-                            contentDescription = null,
-                            tint = PastelPinkMain,
-                            modifier = Modifier.size(56.dp)
-                        )
-                        Spacer(modifier = Modifier.height(12.dp))
-                        Text(
-                            text = stringResource(id = R.string.tap_to_add_memory),
-                            color = PastelPinkDark,
-                            fontWeight = FontWeight.ExtraBold,
-                            fontSize = 16.sp
-                        )
+                    Row(
+                        modifier = Modifier.fillMaxSize(),
+                        horizontalArrangement = Arrangement.SpaceEvenly,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        // Camera Option
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            modifier = Modifier.clickable { cameraLauncher.launch() }
+                        ) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_camera),
+                                contentDescription = null,
+                                tint = PastelPinkMain,
+                                modifier = Modifier.size(48.dp)
+                            )
+                            Text("Camera", color = PastelPinkDark, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                        }
+
+                        // Gallery Option
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            modifier = Modifier.clickable { galleryLauncher.launch("image/*") }
+                        ) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_gallery),
+                                contentDescription = null,
+                                tint = PastelBlueMain,
+                                modifier = Modifier.size(48.dp)
+                            )
+                            Text("Gallery", color = PastelBlueMain, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                        }
                     }
                 }
             }
